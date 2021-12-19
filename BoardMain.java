@@ -52,11 +52,24 @@ public class BoardMain {
 		if(index == -1) {
 			System.out.println("없는 게시물 번호입니다.");
 		} else {
-			// 삭제 코드 작성
-			System.out.println("삭제 기능 실행");
+			// 번호
+			
+			for(int i = index; i < lastIndex; i++) {
+				ids[i] = ids[i + 1];				
+			}
+			for(int i = index; i < lastIndex; i++) {
+				titles[i] = titles[i + 1];				
+			}
+			for(int i = index; i < lastIndex; i++) {
+				bodies[i] = bodies[i + 1];				
+			}
+			lastIndex--;
+			
+			System.out.println("삭제가 완료되었습니다.");
+			list();
 		}
 	}
-
+	
 	private static void printHelp() {
 		System.out.println("add  : 게시물 등록");
 		System.out.println("list : 게시물 목록 조회");	

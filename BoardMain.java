@@ -1,13 +1,16 @@
 package exam.day3.board;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class BoardMain {
 
 	static Scanner scan = new Scanner(System.in);
-	static int[] ids = new int[3]; // 번호 저장소
-	static String[] titles = new String[3]; // 제목 저장소
-	static String[] bodies = new String[3]; // 내용 저장소
+
+	static ArrayList<Integer> ids = new ArrayList<>();
+	static ArrayList<String> titles = new ArrayList<>();
+	static ArrayList<String> bodies = new ArrayList<>();
+	
 	static int lastIndex = 0; // 데이터 하나 저장할 때마다 1증가
 	
 	public static void main(String[] args) {
@@ -52,18 +55,9 @@ public class BoardMain {
 		if(index == -1) {
 			System.out.println("없는 게시물 번호입니다.");
 		} else {
-			// 번호
-			
-			for(int i = index; i < lastIndex; i++) {
-				ids[i] = ids[i + 1];				
-			}
-			for(int i = index; i < lastIndex; i++) {
-				titles[i] = titles[i + 1];				
-			}
-			for(int i = index; i < lastIndex; i++) {
-				bodies[i] = bodies[i + 1];				
-			}
-			lastIndex--;
+			ids.remove(index);
+			titles.remove(index);
+			bodies.remove(index);
 			
 			System.out.println("삭제가 완료되었습니다.");
 			list();
@@ -76,11 +70,13 @@ public class BoardMain {
 	}
 
 	private static void add() {
-		ids[lastIndex] = lastIndex + 1;
+		//ids[lastIndex] = lastIndex + 1;
+		ids.add(lastIndex + 1);
+		
 		System.out.print("제목을 입력해주세요 : ");
-		titles[lastIndex] = scan.nextLine();
+		titles.add(scan.nextLine());
 		System.out.print("내용을 입력해주세요 : ");
-		bodies[lastIndex] = scan.nextLine();
+		bodies.add(scan.nextLine());
 		
 		System.out.println("게시물이 저장되었습니다.");
 		lastIndex++;
@@ -100,8 +96,8 @@ public class BoardMain {
 			System.out.print("내용 : ");
 			String body = scan.nextLine();
 			
-			titles[index] = title;
-			bodies[index] = body;
+			titles.set(index, title);
+			bodies.set(index, body);
 			
 			System.out.println("게시물 수정이 완료되었습니다.");
 			list();
@@ -110,9 +106,9 @@ public class BoardMain {
 	}
 
 	private static void list() {
-		for(int i = 0; i < lastIndex; i++) {		
-			System.out.println("번호 : " + ids[i]);
-			System.out.println("제목 : " + titles[i]);
+		for(int i = 0; i < ids.size(); i++) {		
+			System.out.println("번호 : " + ids.get(i));
+			System.out.println("제목 : " + titles.get(i));
 			System.out.println("=====================");
 		}	
 	}
@@ -121,7 +117,7 @@ public class BoardMain {
 		int index = -1;
 		
 		for(int i = 0; i < lastIndex; i++) {
-			if(targetId == ids[i]) {						
+			if(targetId == ids.get(i)) {						
 				index = i;
 				break;
 			}
@@ -131,3 +127,4 @@ public class BoardMain {
 	}
 
 }
+

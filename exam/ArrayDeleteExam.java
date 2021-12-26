@@ -1,6 +1,6 @@
-package exam.day3.board;
+package exam.day3.board.exam;
 
-public class Test {
+public class ArrayDeleteExam {
 
 	public static void main(String[] args) {
 		

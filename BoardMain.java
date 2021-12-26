@@ -7,11 +7,12 @@ public class BoardMain {
 
 	static Scanner scan = new Scanner(System.in);
 
-	static ArrayList<Integer> ids = new ArrayList<>();
-	static ArrayList<String> titles = new ArrayList<>();
-	static ArrayList<String> bodies = new ArrayList<>();
+//	static ArrayList<Integer> ids = new ArrayList<>();
+//	static ArrayList<String> titles = new ArrayList<>();
+//	static ArrayList<String> bodies = new ArrayList<>();
 	
-	static int lastIndex = 0; // 데이터 하나 저장할 때마다 1증가
+	static ArrayList<Article> articles = new ArrayList<>();
+	static int lastArticleId = 1; // 가장 마지막에 만들어지 게시물 번호
 	
 	public static void main(String[] args) {
 		
@@ -55,10 +56,8 @@ public class BoardMain {
 		if(index == -1) {
 			System.out.println("없는 게시물 번호입니다.");
 		} else {
-			ids.remove(index);
-			titles.remove(index);
-			bodies.remove(index);
 			
+			articles.remove(index);			
 			System.out.println("삭제가 완료되었습니다.");
 			list();
 		}
@@ -71,15 +70,20 @@ public class BoardMain {
 
 	private static void add() {
 		//ids[lastIndex] = lastIndex + 1;
-		ids.add(lastIndex + 1);
+		//ids.add(lastIndex + 1);
 		
+		
+			
 		System.out.print("제목을 입력해주세요 : ");
-		titles.add(scan.nextLine());
+		String title = scan.nextLine();
 		System.out.print("내용을 입력해주세요 : ");
-		bodies.add(scan.nextLine());
+		String body = scan.nextLine();
+		
+		Article a1 = new Article(lastArticleId, title, body);
+		articles.add(a1);
 		
 		System.out.println("게시물이 저장되었습니다.");
-		lastIndex++;
+		lastArticleId++;
 	}
 
 	private static void update() {
@@ -96,8 +100,7 @@ public class BoardMain {
 			System.out.print("내용 : ");
 			String body = scan.nextLine();
 			
-			titles.set(index, title);
-			bodies.set(index, body);
+			articles.set(index, new Article(targetId, title, body));
 			
 			System.out.println("게시물 수정이 완료되었습니다.");
 			list();
@@ -106,9 +109,10 @@ public class BoardMain {
 	}
 
 	private static void list() {
-		for(int i = 0; i < ids.size(); i++) {		
-			System.out.println("번호 : " + ids.get(i));
-			System.out.println("제목 : " + titles.get(i));
+		for(int i = 0; i < articles.size(); i++) {		
+			Article article = articles.get(i);
+			System.out.println("번호 : " + article.id);
+			System.out.println("제목 : " + article.title);
 			System.out.println("=====================");
 		}	
 	}
@@ -116,8 +120,9 @@ public class BoardMain {
 	public static int findIndexByArticleId(int targetId) {
 		int index = -1;
 		
-		for(int i = 0; i < lastIndex; i++) {
-			if(targetId == ids.get(i)) {						
+		for(int i = 0; i < articles.size(); i++) {
+			Article article =  articles.get(i);
+			if(targetId == article.id) {						
 				index = i;
 				break;
 			}

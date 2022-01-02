@@ -6,12 +6,21 @@ public class Article {
 	public int id;// 번호
 	public String title;// 제목
 	public String body;// 내용
+	public String nickname; //작성자
+	public String regDate; // 등록날짜
+	public int hit; // 조회수
 	
-	// 생성자 -> 객체를 만들 때 반드시 실행되는 메서드
-	public Article(int id, String title, String body) {
+	public Article(int id, String title, String body, String nickname, String regDate, int hit) {
+		super();
 		this.id = id;
 		this.title = title;
 		this.body = body;
+		this.nickname = nickname;
+		this.regDate = regDate;
+		this.hit = hit;
 	}
+	
+	// 생성자 -> 객체를 만들 때 반드시 실행되는 메서드
+	
 	
 }

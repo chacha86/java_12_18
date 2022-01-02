@@ -14,7 +14,9 @@ public class BoardMain {
 //	static ArrayList<String> bodies = new ArrayList<>();
 
 	static ArrayList<Article> articles = new ArrayList<>();
+	static ArrayList<Member> members = new ArrayList<>();
 	static int lastArticleId = 4; // 가장 마지막에 만들어지 게시물 번호
+	static int lastMemberId = 1; // 가장 마지막에 만들어지 게시물 번호
 
 	public static void main(String[] args) {
 
@@ -48,6 +50,8 @@ public class BoardMain {
 				search();
 			} else if (cmd.equals("read")) {
 				read();
+			} else if(cmd.equals("signup")) {
+				signup();
 			} else {
 				System.out.println("알 수 없는 명령어입니다.");
 			}
@@ -55,6 +59,37 @@ public class BoardMain {
 
 	}
 
+	private static void signup() {
+		
+		System.out.println("==== 회원 가입을 진행합니다 ====");
+		System.out.print("아이디를 입력해주세요 :");
+		String loginId = scan.nextLine();
+		System.out.print("비밀번호를 입력해주세요 :");
+		String loginPw = scan.nextLine();
+		System.out.print("닉네임을 입력해주세요 :");
+		String nickname = scan.nextLine();
+		System.out.println("==== 회원가입이 완료되었습니다. ====");
+		
+		Member member = new Member(lastMemberId,loginId, loginPw, nickname);
+		members.add(member);
+		lastMemberId++;
+		
+		printMembers(members);
+	}
+
+	private static void printMembers(ArrayList<Member> members) {
+		System.out.println("==== 현재 가입한 회원 목록 ====");
+		for(int i = 0; i < members.size(); i++) {
+			Member member = members.get(i);
+			
+			System.out.println("아이디 : " + member.loginId);
+			System.out.println("비밀번호 : " + member.loginPw);
+			System.out.println("이름 : " + member.nickname);
+			System.out.println("====================");
+			
+		}
+	}
+	
 	private static void read() {
 
 		System.out.print("상세보기할 게시물 번호를 입력해주세요 :");

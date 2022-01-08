@@ -8,10 +8,12 @@ public class MemberController {
 	static Scanner scan = new Scanner(System.in);
 	ArrayList<Member> members = new ArrayList<>();	
 	int lastMemberId = 1;
-	Member loginedMember = null;
+	
+	static Member loginedMember = null;
 	
 	public MemberController() {
 		makeTestData();
+		loginedMember = members.get(0);
 	}
 	
 	public void doCommand(String cmd) {

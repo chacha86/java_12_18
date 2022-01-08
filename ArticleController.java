@@ -9,6 +9,7 @@ public class ArticleController {
 
 	Scanner scan = new Scanner(System.in);
 	ArrayList<Article> articles = new ArrayList<>();
+	MemberController memberController = new MemberController();
 	int lastArticleId = 4;
 	
 	public ArticleController() {
@@ -27,6 +28,12 @@ public class ArticleController {
 			update();
 
 		} else if (cmd.equals("add")) {
+			
+			if(memberController.loginedMember == null) {
+				System.out.println("로그인이 필요한 기능입니다.");
+				return;
+			}
+			
 			add();
 
 		} else if (cmd.equals("search")) {
@@ -60,7 +67,7 @@ public class ArticleController {
 		System.out.println("-------------------");
 		System.out.println("내용 : " + article.body);
 		System.out.println("-------------------");
-		System.out.println("작성자 : " + "익명");
+		System.out.println("작성자 : " + article.nickname);
 		System.out.println("등록날짜 : " + article.regDate);
 		System.out.println("조회수 : " + article.hit);
 		System.out.println("===================");
@@ -71,7 +78,7 @@ public class ArticleController {
 			Article article = targetList.get(i);
 			System.out.println("번호 : " + article.id);
 			System.out.println("제목 : " + article.title);
-			System.out.println("작성자 : " + "익명");
+			System.out.println("작성자 : " + article.nickname);
 			System.out.println("등록날짜 : " + article.regDate);
 			System.out.println("조회수 : " + article.hit);
 			System.out.println("=====================");
@@ -144,7 +151,7 @@ public class ArticleController {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd");
 		String formatedNow = now.format(formatter);
 
-		Article a1 = new Article(lastArticleId, title, body, "익명", formatedNow, 0);
+		Article a1 = new Article(lastArticleId, title, body, memberController.loginedMember.nickname, formatedNow, 0);
 		articles.add(a1);
 
 		System.out.println("게시물이 저장되었습니다.");

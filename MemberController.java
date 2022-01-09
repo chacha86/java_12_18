@@ -89,6 +89,17 @@ public class MemberController {
 		}
 	}
 	
+	public String getNicknameByMemberId(int memberId) {
+		for(int i = 0; i < members.size(); i++) {
+			if (members.get(i).id == memberId) {
+				return members.get(i).nickname;
+			}
+		}
+		
+		return null;
+	}
+	
+	
 	private void makeTestData() {
 		Member m1 = new Member(1, "hong123", "h1234", "홍길동");
 		Member m2 = new Member(2, "lee123", "1234", "이순신");

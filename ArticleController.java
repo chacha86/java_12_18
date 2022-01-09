@@ -1,7 +1,5 @@
 package exam.day3.board;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -12,39 +10,39 @@ public class ArticleController {
 	MemberController memberController = new MemberController();
 	ReadController readController = new ReadController();
 	int lastArticleId = 4;
-	
+
 	public ArticleController() {
 		makeTestData();
 	}
-	
+
 	public void doCommand(String cmd) {
-				
+
 		if (cmd.equals("list")) {
 			list();
-			
+
 		} else if (cmd.equals("delete")) {
 			delete();
-			
+
 		} else if (cmd.equals("update")) {
 			update();
 
 		} else if (cmd.equals("add")) {
-			
-			if(memberController.loginedMember == null) {
+
+			if (memberController.loginedMember == null) {
 				System.out.println("로그인이 필요한 기능입니다.");
 				return;
 			}
-			
+
 			add();
 
 		} else if (cmd.equals("search")) {
 			search();
-			
+
 		} else if (cmd.equals("read")) {
 			read();
 		}
 	}
-	
+
 	private void read() {
 
 		System.out.print("상세보기할 게시물 번호를 입력해주세요 :");
@@ -57,51 +55,62 @@ public class ArticleController {
 			Article article = articles.get(targetIndex);
 			article.hit++; // 조회수 1증가
 			printArticle(article);
-			
+
 			// 상세보기 프로세스
-			while(true) {
+			while (true) {
 				System.out.println("reply. 댓글 등록, like. 좋아요, update. 수정, delete. 삭제, back. 목록으로 ");
-				String cmd = scan.nextLine();			
-				if(cmd.equals("back")) {
+				String cmd = scan.nextLine();
+				if (cmd.equals("back")) {
 					break;
 				}
-				readController.doCommand(cmd);
+				readController.doCommand(cmd, article);
 				printArticle(article);
 			}
 		}
 
 	}
-	
+
 	private void printArticle(Article article) {
+
+		String nicknameOfArticle = memberController.getNicknameByMemberId(article.memberId);
+
 		System.out.println("==== " + article.id + "번 게시물 ====");
 		System.out.println("번호 : " + article.id);
 		System.out.println("제목 : " + article.title);
 		System.out.println("-------------------");
 		System.out.println("내용 : " + article.body);
 		System.out.println("-------------------");
-		System.out.println("작성자 : " + article.nickname);
+		System.out.println("작성자 : " + nicknameOfArticle);
 		System.out.println("등록날짜 : " + article.regDate);
 		System.out.println("조회수 : " + article.hit);
 		System.out.println("===================");
 		System.out.println("======= 댓글 =======");
-		
+
 		ArrayList<Reply> replies = readController.replies;
-		
-		for(int i = 0; i < replies.size(); i++) {
-		 	 System.out.println("내용 : " + replies.get(i).body);
-		     System.out.println("작성자 : " + replies.get(i).memberId);
-		     System.out.println("작성일 : " + replies.get(i).regDate);
-		     System.out.println("====================");
+
+		for (int i = 0; i < replies.size(); i++) {
+			Reply reply = replies.get(i);
+			
+			if(reply.articleId == article.id) {				
+				String nicknameOfReply = memberController.getNicknameByMemberId(reply.memberId);
+				System.out.println("내용 : " + reply.body);
+				System.out.println("작성자 : " + nicknameOfReply);
+				System.out.println("작성일 : " + reply.regDate);
+				System.out.println("====================");
+			}
+			
+			
 		}
-		
+
 	}
-	
+
 	private void printArticles(ArrayList<Article> targetList) {
 		for (int i = 0; i < targetList.size(); i++) {
 			Article article = targetList.get(i);
+			String nickname = memberController.getNicknameByMemberId(article.memberId);
 			System.out.println("번호 : " + article.id);
 			System.out.println("제목 : " + article.title);
-			System.out.println("작성자 : " + article.nickname);
+			System.out.println("작성자 : " + nickname);
 			System.out.println("등록날짜 : " + article.regDate);
 			System.out.println("조회수 : " + article.hit);
 			System.out.println("=====================");
@@ -141,7 +150,7 @@ public class ArticleController {
 			list();
 		}
 	}
-	
+
 	private void list() {
 		printArticles(articles);
 	}
@@ -159,7 +168,7 @@ public class ArticleController {
 
 		return index;
 	}
-	
+
 	private void add() {
 		// ids[lastIndex] = lastIndex + 1;
 		// ids.add(lastIndex + 1);
@@ -169,8 +178,8 @@ public class ArticleController {
 		System.out.print("내용을 입력해주세요 : ");
 		String body = scan.nextLine();
 		String currentDate = MyUtil.getCurrentDate();
-		
-		Article a1 = new Article(lastArticleId, title, body, memberController.loginedMember.nickname, currentDate, 0);
+
+		Article a1 = new Article(lastArticleId, title, body, memberController.loginedMember.id, currentDate, 0);
 		articles.add(a1);
 
 		System.out.println("게시물이 저장되었습니다.");
@@ -191,18 +200,18 @@ public class ArticleController {
 			System.out.print("내용 : ");
 			String body = scan.nextLine();
 
-			articles.set(index, new Article(targetId, title, body, "익명", "2021.01.02", 0));
+			articles.set(index, new Article(targetId, title, body, 1, "2021.01.02", 0));
 
 			System.out.println("게시물 수정이 완료되었습니다.");
 			list();
 		}
 	}
-	
+
 	private void makeTestData() {
-		Article a1 = new Article(1, "안녕하세요", "내용1", "익명", "2021.01.02", 0);
-		Article a2 = new Article(2, "반갑습니다", "내용2", "익명", "2021.01.02", 0);
-		Article a3 = new Article(3, "안녕2", "내용3", "익명", "2021.01.02", 0);
-		
+		Article a1 = new Article(1, "안녕하세요", "내용1", 1, "2021.01.02", 0);
+		Article a2 = new Article(2, "반갑습니다", "내용2", 2, "2021.01.02", 0);
+		Article a3 = new Article(3, "안녕2", "내용3", 1, "2021.01.02", 0);
+
 		articles.add(a1);
 		articles.add(a2);
 		articles.add(a3);

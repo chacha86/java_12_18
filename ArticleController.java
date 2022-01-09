@@ -83,6 +83,17 @@ public class ArticleController {
 		System.out.println("등록날짜 : " + article.regDate);
 		System.out.println("조회수 : " + article.hit);
 		System.out.println("===================");
+		System.out.println("======= 댓글 =======");
+		
+		ArrayList<Reply> replies = readController.replies;
+		
+		for(int i = 0; i < replies.size(); i++) {
+		 	 System.out.println("내용 : " + replies.get(i).body);
+		     System.out.println("작성자 : " + replies.get(i).memberId);
+		     System.out.println("작성일 : " + replies.get(i).regDate);
+		     System.out.println("====================");
+		}
+		
 	}
 	
 	private void printArticles(ArrayList<Article> targetList) {

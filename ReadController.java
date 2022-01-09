@@ -52,7 +52,7 @@ public class ReadController {
 		}
 	}
 
-	private Like getLikeByArticleIdAndMemberId(int articleId, int memberId) {
+	public Like getLikeByArticleIdAndMemberId(int articleId, int memberId) {
 		
 		for(int i = 0; i < likes.size(); i++) {
 			if (likes.get(i).articleId == articleId && likes.get(i).memberId == memberId) {
@@ -63,6 +63,19 @@ public class ReadController {
 		return null;
 	}
 
+	public int getLikeCountOfArticle(int articleId) {
+		
+		int count = 0;
+		
+		for(int i = 0; i < likes.size(); i++) {
+			if (likes.get(i).articleId == articleId) {
+				count++;
+			}
+		}
+		
+		return count;
+	}
+	
 	private void reply(Article article) {
 		
 		System.out.print("댓글 내용을 입력해주세요 :");

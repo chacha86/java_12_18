@@ -65,7 +65,8 @@ public class ArticleController {
 				if(cmd.equals("back")) {
 					break;
 				}
-				readController.doCommand(cmd);				
+				readController.doCommand(cmd);
+				printArticle(article);
 			}
 		}
 
@@ -156,13 +157,9 @@ public class ArticleController {
 		String title = scan.nextLine();
 		System.out.print("내용을 입력해주세요 : ");
 		String body = scan.nextLine();
-
-		// 오늘 날짜 구하기
-		LocalDate now = LocalDate.now();
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd");
-		String formatedNow = now.format(formatter);
-
-		Article a1 = new Article(lastArticleId, title, body, memberController.loginedMember.nickname, formatedNow, 0);
+		String currentDate = MyUtil.getCurrentDate();
+		
+		Article a1 = new Article(lastArticleId, title, body, memberController.loginedMember.nickname, currentDate, 0);
 		articles.add(a1);
 
 		System.out.println("게시물이 저장되었습니다.");

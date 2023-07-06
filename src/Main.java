@@ -3,5 +3,9 @@ public class Main {
         System.out.println("Hello World!!!");
         System.out.printf("saldfkjaskjf");
         System.out.printf("xcv.,mxc.vm,1:");
+        System.out.printf("xcv.,mxc.vm,1:");
+        System.out.printf("xcv.,mxc.vm,1:");
+        System.out.printf("xcv.,mxc.vm,1:");
+        System.out.printf("xcv.,mxc.vm,1:");
     }
 }

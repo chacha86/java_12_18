@@ -1,6 +1,7 @@
 package exam.day3.board;
 
 // 유사한 데이터를 모아두는 것
+///
 public class Article {
 	
 	public int id;// 번호

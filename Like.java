@@ -1,6 +1,7 @@
 package exam.day3.board;
 
 public class Like {
+	///
 
 	int id; // 좋아요 식별 데이터
 	int articleId; // 좋아요가 체크된 게시물 번호

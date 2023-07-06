@@ -2,7 +2,7 @@ package exam.day3.board;
 
 import java.util.ArrayList;
 import java.util.Scanner;
-
+///
 public class ArticleController {
 
 	Scanner scan = new Scanner(System.in);

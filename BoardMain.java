@@ -1,11 +1,11 @@
 package exam.day3.board;
 
 import java.util.Scanner;
-
+//////
 public class BoardMain {
 
 	static Scanner scan = new Scanner(System.in);
-	
+	//asdlkfjsldkfj
 	public static void main(String[] args) {
 		
 		ArticleController articleController = new ArticleController();
